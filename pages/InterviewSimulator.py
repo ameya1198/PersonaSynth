@@ -16,38 +16,243 @@ st.set_page_config(
 # === CSS ===
 st.markdown("""
     <style>
+    /* Hide Streamlit elements */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* Main app styling */
+    .stApp {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
     section[data-testid="stSidebar"] {
         background-color: #15803d; 
         color: #14532d;
     }
+    
     section[data-testid="stSidebar"] .css-1d391kg {
-        color: black !important;  /* Label text */
+        color: black !important;
         font-weight: bold;
     }
+    
+    /* Enhanced selectbox styling */
     div[data-baseweb="select"] {
-        background-color: #f1f5f9;
-        border-radius: 12px;
-        padding: 6px;
-        border: 1px solid #e2e8f0;
+        background: white;
+        border-radius: 16px;
+        padding: 12px 16px;
+        border: 2px solid #e2e8f0;
         font-size: 16px;
-        border-left: 4px solid #15803d;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
     }
+    
     div[data-baseweb="select"]:hover {
-        cursor:pointer;
+        cursor: pointer;
+        border-color: #15803d;
+        box-shadow: 0 6px 20px rgba(21, 128, 61, 0.15);
     }
+    
     div[data-baseweb="select"] > div {
         color: #1e293b;
-        border-right-color:#15803d;
-        border-left-color:#15803d;
-        border-top-color:#15803d;
-        border-bottom-color:#15803d;
+        font-weight: 500;
     }
-     div[data-baseweb="select"] > div:hover {
+    
+    div[data-baseweb="select"] > div:hover {
         color: #15803d;
-        cursor:pointer;
+        cursor: pointer;
     }
+    
+    /* Logo styling */
     .logo-container {
-        margin-bottom:10px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+    }
+    
+    .logo-container:hover {
+        transform: scale(1.05);
+    }
+    
+    /* Info box styling */
+    .info-box {
+        background: white;
+        padding: 20px 24px;
+        border-radius: 16px;
+        margin: 20px 0;
+        border-left: 4px solid #15803d;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+    
+    .info-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+    
+    .info-title {
+        font-weight: 700;
+        color: #14532d;
+        margin-bottom: 8px;
+    }
+    
+    .info-description {
+        color: #64748b;
+        line-height: 1.6;
+    }
+    
+    /* Button styling */
+    .stButton > button {
+        background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 16px 48px;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(21, 128, 61, 0.3);
+        width: 100%;
+        margin: 20px 0;
+    }
+    
+    .stButton > button:hover {
+        background: linear-gradient(135deg, #14532d 0%, #15803d 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(21, 128, 61, 0.4);
+    }
+    
+    /* Progress bar styling */
+    .stProgress > div > div > div > div {
+        background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+        border-radius: 10px;
+    }
+    
+    /* Chat bubble improvements */
+    .chat-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .round-indicator {
+        background: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        margin: 20px 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(21, 128, 61, 0.1);
+    }
+    
+    .round-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #14532d;
+        margin-bottom: 12px;
+    }
+    
+    /* Chat input styling */
+    .stChatInput > div > div > div > div {
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 12px 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .stChatInput > div > div > div > div:focus-within {
+        border-color: #15803d;
+        box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.1);
+    }
+    
+    /* Warning and success messages */
+    .stAlert {
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Feedback section */
+    .feedback-container {
+        background: white;
+        padding: 32px;
+        border-radius: 20px;
+        margin: 24px 0;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(21, 128, 61, 0.1);
+    }
+    
+    .feedback-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #14532d;
+        margin-bottom: 24px;
+        text-align: center;
+    }
+    
+    .skill-item {
+        margin-bottom: 24px;
+        padding: 20px;
+        background: #f8fafc;
+        border-radius: 12px;
+        border-left: 4px solid #15803d;
+    }
+    
+    .skill-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+    
+    .skill-name {
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 16px;
+    }
+    
+    .skill-score {
+        font-size: 14px;
+        font-weight: 600;
+        color: #64748b;
+    }
+    
+    .progress-bar {
+        height: 8px;
+        background-color: #e2e8f0;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 8px;
+    }
+    
+    .progress-fill {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 0.8s ease-in-out;
+    }
+    
+    .skill-comment {
+        font-size: 14px;
+        color: #64748b;
+        line-height: 1.5;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .chat-container {
+            padding: 10px;
+        }
+        
+        .feedback-container {
+            padding: 20px;
+            margin: 16px 0;
+        }
+        
+        .stButton > button {
+            padding: 14px 32px;
+            font-size: 16px;
+        }
     }
     </style>
 """, unsafe_allow_html=True)
@@ -180,8 +385,9 @@ else:
 ideal_user_desc = AGENT_IDEAL_USERS.get(selected_agent)
 if ideal_user_desc:
     st.markdown(f"""
-    <div style='background-color: #f1f5f9; padding: 12px 14px; border-radius: 12px; margin-top: 12px; margin-bottom: 12px; border-left: 4px solid #15803d;'>
-        <strong>Ideal Candidates:</strong><br>{ideal_user_desc}
+    <div class="info-box">
+        <div class="info-title">💡 Ideal Candidates</div>
+        <div class="info-description">{ideal_user_desc}</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -194,9 +400,7 @@ if st.session_state.active_key != new_key:
         
 # === Start Interview Button ===
 with st.container():
-    st.markdown('<div class="button-wrapper">', unsafe_allow_html=True)
     clicked = st.button("Start Your Interview!", key="start")
-    st.markdown('</div>', unsafe_allow_html=True)
 
     if "started" not in st.session_state:
         st.session_state.started = False
@@ -211,6 +415,8 @@ with st.container():
         })
 # === Chat Interface ===
 if st.session_state.started:
+    st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+    
     def chat_bubble(content, sender, color, align_right=False):
         tail = f"""
             content: \"\";
@@ -225,19 +431,26 @@ if st.session_state.started:
         align = "margin-left: auto;" if align_right else "margin-right: auto;"
         return f"""
             <div style='{align} max-width: 70%; display: flex; flex-direction: column;'>
-                <div style='position: relative; padding: 12px 14px; margin:8px 8px 12px 8px; border-radius: 16px; background-color: {color}; color: white; font-size: 15px; font-weight: 400;'>
-                    <strong>{sender}:</strong><br>{content}
+                <div style='position: relative; padding: 16px 20px; margin: 8px; border-radius: 20px; background: {color}; color: white; font-size: 15px; font-weight: 400; box-shadow: 0 4px 12px rgba(0,0,0,0.15); line-height: 1.5;'>
+                    <div style='font-weight: 600; margin-bottom: 8px; opacity: 0.9;'>{sender}</div>
+                    <div>{content}</div>
                     <div style='{tail}'></div>
                 </div>
             </div>
         """
 
-    agent_color = "#0077b6"
-    user_color = "#15803d"
+    agent_color = "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)"
+    user_color = "linear-gradient(135deg, #15803d 0%, #16a34a 100%)"
 
     num_completed = len([m for m in st.session_state.history if m["user"]])
     current_round = num_completed + 1
-    st.markdown(f"### Round {min(current_round, MAX_TURNS)} of {MAX_TURNS}")
+    
+    st.markdown(f"""
+    <div class="round-indicator">
+        <div class="round-title">Round {min(current_round, MAX_TURNS)} of {MAX_TURNS}</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
     st.progress(min(current_round, MAX_TURNS) / MAX_TURNS)
 
     for turn in st.session_state.history:
@@ -271,49 +484,55 @@ if st.session_state.started:
                     "user": ""
                 })
             st.rerun()
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
 # === Interview Completion & Feedback ===
     elif num_completed == MAX_TURNS:
-        st.success("Interview Complete!")
+        st.success("🎉 Interview Complete! Great job!")
 
         if st.session_state.feedback is None:
-            if st.button("Get Feedback Summary"):
+            if st.button("📊 Get Detailed Feedback"):
                 from feedback_evaluator import evaluator
                 full_transcript = "\n".join(
                     [f"{m['agent']}: {m['question']}\nUser: {m['user']}" for m in st.session_state.history]
                 )
-                with st.spinner("Evaluating your performance..."):
+                with st.spinner("🔍 Analyzing your performance..."):
                     st.session_state.feedback = evaluator.evaluate(full_transcript)
 
         if isinstance(st.session_state.feedback, dict):
-            st.markdown("### Interview Feedback")
+            st.markdown("""
+            <div class="feedback-container">
+                <div class="feedback-title">📈 Your Interview Performance</div>
+            """, unsafe_allow_html=True)
+            
             for skill, value in st.session_state.feedback.items():
                 if skill == "Summary":
                     continue
                 if isinstance(value, (list, tuple)) and len(value) == 2:
                     score, comment = value
-                    st.markdown(f"**{skill}**")
+                    color = '#e63946' if score < 5 else '#15803d' if score >= 7 else '#f59e0b'
                     st.markdown(f"""
-                    <div style='margin-bottom: 8px;'>
-                      <div style='display: flex; justify-content: space-between;'>
-                        <div style='font-weight: 500;'>{skill}</div>
-                        <span style='font-size: 14px;'>Score: {score}/10</span>
-                      </div>
-                      <div style='height: 14px; background-color: #ddd; border-radius: 6px;'>
-                        <div style='height: 100%; width: {score * 10}%; background-color: {'#e63946' if score < 5 else '#15803d'}; border-radius: 6px; transition: width 0.4s ease-in-out;'></div>
-                      </div>
-                      <div style='margin-top: 6px; font-size: 13px; color: #334155;'>{comment}</div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <div class="skill-name">{skill}</div>
+                            <div class="skill-score">{score}/10</div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {score * 10}%; background: {color};"></div>
+                        </div>
+                        <div class="skill-comment">{comment}</div>
                     </div>
                     """, unsafe_allow_html=True)
-                else:
-                    st.markdown(f"**{skill}**")
-                    st.markdown(str(value))
 
-            st.markdown("### Summary")
+            st.markdown("</div>", unsafe_allow_html=True)
+            
+            st.markdown("### 📝 Overall Summary")
             summary = st.session_state.feedback.get("Summary", "No summary available.")
             st.info(summary)
 
         elif st.session_state.feedback:
-            st.markdown("### Interview Feedback")
+            st.markdown("### 📊 Interview Feedback")
             st.markdown(st.session_state.feedback)
 
         if st.button("🔄 Restart Interview", help="Click to start over"):
